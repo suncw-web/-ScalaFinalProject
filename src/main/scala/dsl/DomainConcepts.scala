@@ -1,10 +1,11 @@
+package dsl
+
 //case class DomainConcepts()
 
 
 // Define the Core Domain Concepts of DSL (Domain Specific language)
 // First, we define the main entities in our domain, such as Stock, StockOption, Quantity, and LimitPrice.
 // These will be used to specify the buy and sell orders.
-
 
 // Representing stocks and stockOptions
 case class Stock(symbol: String)

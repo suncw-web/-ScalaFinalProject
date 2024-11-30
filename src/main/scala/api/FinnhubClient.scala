@@ -1,11 +1,12 @@
-import TradingApp.apiKey
+package api
+
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
+import akka.stream.Materializer
 import io.circe.generic.auto._
 import io.circe.parser._
-import akka.stream.Materializer
 
 import scala.concurrent.{ExecutionContext, Future}
 

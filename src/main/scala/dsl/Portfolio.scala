@@ -1,3 +1,7 @@
+package dsl
+
+import api.AlphaVantageClient
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 

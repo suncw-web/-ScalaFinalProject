@@ -1,4 +1,8 @@
+package MockExchange
+
+import dsl.{Stock, StockOption}
 // Mock Exchange simulating real-time price retrieval
+
 object MockExchange {
   // Simulating current market prices for some assets
   private val marketPrices: Map[String, Double] = Map(

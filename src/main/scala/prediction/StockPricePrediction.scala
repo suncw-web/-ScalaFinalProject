@@ -1,10 +1,11 @@
-import org.apache.spark.sql.{SparkSession, Row}
+package prediction
+
+import org.apache.spark.ml.evaluation.RegressionEvaluator
 import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.ml.regression.LinearRegression
-import org.apache.spark.ml.linalg.Vectors
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
-import org.apache.spark.ml.evaluation.RegressionEvaluator
 
 
 object StockPricePrediction {
@@ -29,7 +30,7 @@ object StockPricePrediction {
     ))
 
     // Load the dataset
-    val filePath = "src/main/resources/sp500_stocks.csv" // Replace with your actual file path
+    val filePath = "src/main/resources/sp500_stocks.csv"
     val stockData = spark.read
       .option("header", "true")
       .option("inferSchema", "true")
@@ -75,7 +76,7 @@ object StockPricePrediction {
       assembledData.select("features").show(10, truncate = false)
 
       // Prepare the final dataset with features and label (close price)
-      val finalData = assembledData.select("features", "Close")
+      val finalData = assembledData.select("Symbol","features", "Close")
 
       // Split data into training (80%) and test (20%) sets
       val Array(trainingData, testData) = finalData.randomSplit(Array(0.8, 0.2))
