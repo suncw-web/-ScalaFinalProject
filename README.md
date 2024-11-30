@@ -5,9 +5,11 @@ This is the CSYE7200 Big Data Systems Engineering Using Scala Final Project for 
 
 Team Members:
 
+Shuyan Bian  bian.shu@northeastern.edu
+
 Xingxing Xiao xiao.xingx@northeastern.edu
 
-Shuyan Bian  shuyan.b@northeastern.edu
+Caowang Sun   sun.cao#northeastern.edu
 
 # Final Presentation
 
