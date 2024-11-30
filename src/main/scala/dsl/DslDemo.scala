@@ -4,13 +4,8 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.HttpRequest
-import akka.http.scaladsl.model.HttpResponse
-import akka.http.scaladsl.unmarshalling.Unmarshal
 import dsl.{LimitPrice, Portfolio, Quantity, Stock, StockOption}
-import io.circe.generic.auto._
-import io.circe.parser.decode
+
 
 object DslDemo extends App {
 
