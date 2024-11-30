@@ -9,7 +9,7 @@ Shuyan Bian  bian.shu@northeastern.edu
 
 Xingxing Xiao xiao.xingx@northeastern.edu
 
-Caowang Sun   sun.cao#northeastern.edu
+Caowang Sun   sun.cao@northeastern.edu
 
 # Final Presentation
 
