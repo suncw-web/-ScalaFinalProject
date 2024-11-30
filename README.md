@@ -11,7 +11,6 @@ Shuyan Bian  shuyan.b@northeastern.edu
 
 # Final Presentation
 
-
 # Abstract
 
 To examine a number of different forecasting techniques to predict future stock returns based on past returns and numerical news indicators to construct a portfolio of multiple stocks in order to diversify the risk. We do this by applying supervised learning methods for stock price forecasting by interpreting the seemingly chaotic market data.
@@ -32,14 +31,6 @@ To examine a number of different forecasting techniques to predict future stock 
 
 5. Using forecast method of ARIMA model stock prices for 30 days.
 
-## Twitter Sentiment Analysis
-1. Tweets acquired by Search API are in JSON format with a maximum limit of 100 per request. Built a JSON parser to correctly parse the and filter those attributes which are not required.
-
-2. Special characters are removed to increase the accuracy of the sentiment scores.
-
-3. Using Stanford NLP to calculate the sentiment score which tells whether the particular tweet is positive or negative.
-
-4. Using Spark Streaming to receive the stream of tweets and perform the analysis for past 7 days.
 
 
 # Steps to run the project on the local machine
@@ -51,9 +42,7 @@ To examine a number of different forecasting techniques to predict future stock 
 
 3. Configure scala 2.12.11 on your machine
 
-4. To run from terminal go to the Stock-Market-Prediction and write sbt run.
-
-5. Also make sure to configure your database in config file so that you can signUp and login to the application.
+4. To run in IntelliJ.
 
 
 # Dataset
