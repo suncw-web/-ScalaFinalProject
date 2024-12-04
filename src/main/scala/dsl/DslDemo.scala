@@ -1,58 +1,59 @@
-import api.AlphaVantageClient
+package dsl
 
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
-import akka.actor.ActorSystem
-import akka.stream.Materializer
-import dsl.{LimitPrice, Portfolio, Quantity, Stock, StockOption}
+import Trade._
 
 
 object DslDemo extends App {
 
-  // Create ActorSystem and Materializer (implicitly required by Akka HTTP)
-  implicit val system: ActorSystem = ActorSystem("alpha-vantage-system")
-  implicit val materializer: Materializer = Materializer(system)
-  implicit val ec: ExecutionContext = system.dispatcher // ExecutionContext for handling futures
+  // Sample orders, no use portfolio to manage orders
+  val stockOrder = buy(100).of("AAPL").atLimit(150.0)
+  val optionOrder = sell(50).ofOption("GOOGL", Call, 2500.0, "2024-12-31").atMarket()
+  val marketOrder = sell(50).of("AAPL").atStop(280.0)
 
-  // API key for Alpha Vantage
-  val apiKey = "6L4F5FO8C8QOMQRN" // Replace with your Alpha Vantage API key
+  println(stockOrder)  // Output: Order(BUY,100,Stock(AAPL),Limit(150.0))
+  println(optionOrder) // Output: Order(Sell,Quantity(50),StockOption(GOOGL,Call,Some(2500.0),Some(2024-12-31)),Some(Market),GTC,Pending)
+  println(marketOrder) // Output: Order(SELL,50, Stock(AAPL), stop(280.0))
+  println()
 
-  // Instantiate AlphaVantageClient with implicit parameters
-  val alphaVantageClient = new AlphaVantageClient(apiKey)
+  // Create a portfolio instance
+  val portfolio = Portfolio()
 
-  // Instantiate Portfolio and pass the AlphaVantageClient instance as a dependency
-  private val portfolio = Portfolio(alphaVantageClient)
-    .buy(Stock("AAPL"), Quantity(100))
-    .sell(StockOption("AAPL", "CALL", "2024-12-31", 150), Quantity(10))
-    .buy(Stock("GOOGL"), Quantity(50), Some(LimitPrice(2800)))
-    .marketBuy(Stock("GOOGL"), Quantity(50))
-    .marketSell(Stock("AMZN"), Quantity(20))
+  // Place buy orders using the DSL
+  private val buyOrder1 = portfolio.buy(100).of("AAPL").atMarket()  // Market order for 100 AAPL shares
+  private val buyOrder2 = portfolio.buy(50).of("GOOG").atLimit(1500.0)  // Limit order for 50 GOOG shares at $1500
 
-  // Print out portfolio orders
+  // Place sell orders using the DSL
+  private val sellOrder1 = portfolio.sell(100).of("AAPL").atStop(140.0)  // Stop order for 100 AAPL shares at $140
+  private val sellOrder2 = portfolio.sell(300).ofOption("MMM", Call, 132.0, "2024-12-31").atMarket() //Order
+
+  // Add orders to the portfolio
+  portfolio.addOrder(buyOrder1)
+  portfolio.addOrder(buyOrder2)
+  portfolio.addOrder(sellOrder1)
+  portfolio.addOrder(sellOrder2)
+
+  // Show portfolio summary
+  portfolio.summary()  // Prints the summary of all orders in the portfolio
+  println()
+
+  portfolio.removeOrder(buyOrder1)
+
+  //output order list
   println(portfolio.getOrders)
-  println()
+
+  // Show the portfolio details again after execution
   portfolio.show()
   println()
 
-  // Simulate market order executions with real-time price fetching
-  portfolio.executeMarketOrders()  // Execute market orders
-  println()
+  // Demo adding a DSL-built order directly to the portfolio
+  val assetBuilder = portfolio.buy(10).ofOption("AAPL", Call, 150.0, "2024-12-15")
+  portfolio.addDslOrder(assetBuilder, Market)
 
-  // The stock symbol for which we want to fetch the real-time price
-  val symbol = "AAPL"  // Replace with my desired stock symbol
+  // addTo is a method of AssetBuilder
+  val assetBuilder1 = portfolio.buy(20).ofOption("MMM", Call, 132.0, "2024-12-31")
+  assetBuilder1.addTo(portfolio, Limit(145))
 
-  // Fetch real-time price using the AlphaVantageClient
-  alphaVantageClient.getRealTimePrice(symbol).onComplete {
-    case Success(priceOpt) =>
-      println(s"The latest price for $symbol is: ${priceOpt.getOrElse("Unavailable")}")
-    case Failure(exception) =>
-      println(s"Failed to fetch price: $exception")
-  }
-
-  // Example of interacting with the portfolio, you can add buy/sell orders
-  portfolio.buy("AAPL", Quantity(10)) // Adding a buy order for AAPL
-
-  // Show the portfolio orders
+  // Show updated portfolio after adding option order
   portfolio.show()
-  println()
+
 }

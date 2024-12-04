@@ -1,4 +1,3 @@
-import TradingApp.system
 import akka.actor.ActorSystem
 import akka.stream.Materializer
 import akka.http.scaladsl.Http
@@ -12,11 +11,18 @@ import java.time.temporal.ChronoUnit
 import java.time.format.DateTimeFormatter
 import java.time.ZoneId
 
-import api.FinnhubClient
+import apiClient.FinnhubClient
 
 object TradingApp extends App{
   println("Hello, TradingApp!")
-  //User Methods to Create Buy/Sell Orders
+  println("Enter the stock symbol you want to check (e.g., AAPL):")
+
+  // Read the stock symbol from the user
+  val symbol = scala.io.StdIn.readLine().toUpperCase()
+  //val symbol = "AAPL"
+
+
+  // User Methods to Create Buy/Sell Orders
   // Creates a Portfolio and adds several orders (buy and sell).
   // It shows the portfolio's orders with the getOrder or show method.
 
@@ -32,7 +38,7 @@ object TradingApp extends App{
   val apiKey = "ct391jpr01qkff714tggct391jpr01qkff714th0" // Replace with my Finnhub API key
   val finnhubClient = new FinnhubClient(apiKey)
 
-  val symbol = "AAPL"
+
 
   finnhubClient.getRealTimePrice(symbol).onComplete {
     case Success(Some(price)) =>
@@ -67,7 +73,7 @@ object TradingApp extends App{
   }
 
   // Shutdown the ActorSystem after a delay
-  system.scheduler.scheduleOnce(scala.concurrent.duration.Duration(10, "seconds")) {
+  system.scheduler.scheduleOnce(scala.concurrent.duration.Duration(5, "seconds")) {
     system.terminate()
   }
 }

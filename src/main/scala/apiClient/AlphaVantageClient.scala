@@ -1,7 +1,4 @@
-package api
-
 //akka method
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
@@ -9,9 +6,8 @@ import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.Materializer
 import io.circe.generic.auto._
 import io.circe.parser._
-
 import scala.concurrent.{ExecutionContext, Future}
-
+import scala.util.{Failure, Success}
 // Case classes for Alpha Vantage API response
 case class TimeSeriesData(open: String, high: String, low: String, close: String, volume: String)
 case class AlphaVantageError(Information: String)
@@ -20,13 +16,10 @@ case class AlphaVantageResponse(`Time Series (1min)`: Option[Map[String, TimeSer
 class AlphaVantageClient(apiKey: String)(implicit system: ActorSystem, materializer: Materializer, ec: ExecutionContext) {
   //private val apiKey = "your-api-key"
   private val baseUrl = "https://www.alphavantage.co/query"
-
   /** Fetch real-time stock price for a given symbol */
   def getRealTimePrice(symbol: String): Future[Option[Double]] = {
     val url = s"$baseUrl?function=TIME_SERIES_INTRADAY&symbol=$symbol&interval=1min&apikey=$apiKey"
-
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = url))
-
     responseFuture.flatMap { response =>
       Unmarshal(response.entity).to[String].map { jsonString =>
         println(s"Raw JSON response: $jsonString") // Debug: Print the raw JSON

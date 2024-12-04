@@ -1,6 +1,6 @@
 package MockExchange
 
-import dsl.{Stock, StockOption}
+import dsl.{Call, Put, Stock, StockOption}
 
 object MockExchangeDemo extends App {
   // Fetching the price for a stock
@@ -9,9 +9,15 @@ object MockExchangeDemo extends App {
   println(s"Current market price for ${appleStock.symbol}: ${applePrice.getOrElse("Unavailable")}")
 
   // Fetching the price for a stock option
-  private val googleCallOption = StockOption("GOOGL", "CALL", "2024-12-31", 2800)
+  private val googleCallOption = StockOption("GOOGL", Call, Some(2800), Some("2024-12-31"))
   private val googleOptionPrice = MockExchange.getPrice(googleCallOption)
-  println(s"Current market price for Google Call Option: ${googleOptionPrice.getOrElse("Unavailable")}")
+  println(s"Current market price for ${googleCallOption.symbol} ${googleCallOption.optionType} Option: ${googleOptionPrice.getOrElse("Unavailable")}")
+
+  // Fetching the price for a stock option
+  private val applePutOption = StockOption("AAPL", Put, Some(250), Some("2024-12-31"))
+  private val appleOptionPrice = MockExchange.getPrice(applePutOption)
+  println(s"Current market price for ${applePutOption.symbol} ${applePutOption.optionType} Option " +
+    s"at strike ${applePutOption.strike}: ${appleOptionPrice.getOrElse("Unavailable")}")
 
   // Fetching the price for an unsupported asset
   private val unsupportedAsset = "UnsupportedAsset"

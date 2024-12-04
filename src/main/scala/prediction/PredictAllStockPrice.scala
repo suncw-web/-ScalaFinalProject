@@ -7,8 +7,9 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 
-
-object StockPricePrediction {
+// use the system to predict future stock prices
+// and then to use linear regression
+object PredictAllStockPrice {
 
   def main(args: Array[String]): Unit = {
     // Initialize Spark session
@@ -79,6 +80,7 @@ object StockPricePrediction {
       val finalData = assembledData.select("Symbol","features", "Close")
 
       // Split data into training (80%) and test (20%) sets
+      // Or turning the training ratio
       val Array(trainingData, testData) = finalData.randomSplit(Array(0.8, 0.2))
 
       // Create a linear regression model

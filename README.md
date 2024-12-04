@@ -34,7 +34,6 @@ To examine a number of different forecasting techniques to predict future stock 
 5. Using forecast method of ARIMA model stock prices for 30 days.
 
 
-
 # Steps to run the project on the local machine
 ## Run on windows and mac
 

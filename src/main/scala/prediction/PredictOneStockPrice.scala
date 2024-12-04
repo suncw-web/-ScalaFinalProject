@@ -13,7 +13,7 @@ import org.apache.spark.sql.types._
  * This method is to use 'Open', 'High', 'Low', and 'Volume' to predict 'Close' price of the same day
  * I create another method to predict the next day's 'close' price by linear regression
  */
-object ChooseOneStockPricePrediction {
+object PredictOneStockPrice {
   def main(args: Array[String]): Unit = {
 
     // Initialize Spark session
@@ -42,6 +42,10 @@ object ChooseOneStockPricePrediction {
       .schema(schema)
       .csv(filePath)
 
+    // Get the total number of rows in the dataset
+    val totalRows = stockData.count()
+    println(s"Total number of rows in the dataset: $totalRows")
+
     // data cleaning: Handle null values by replacing them with 0.0
     val filledData = stockData.na.fill(0.0)
 
@@ -51,7 +55,7 @@ object ChooseOneStockPricePrediction {
     val numericData = filledData.withColumn("Volume", col("Volume").cast("double"))
 
     // Select a stock symbol
-    val selectedSymbol = "AMZN"
+    val selectedSymbol = "MMM"
     //val selectedSymbol = args(0) // Assuming symbol is passed as a command-line argument
 
 
@@ -93,7 +97,7 @@ object ChooseOneStockPricePrediction {
     println(s"Root Mean Squared Error (RMSE) for $selectedSymbol: $rmse")
 
     // Display predictions
-    predictions.select("features", "Close", "prediction").show(10)
+    predictions.select("features", "Close", "prediction").show(5)
 
     // Stop Spark session
     spark.stop()

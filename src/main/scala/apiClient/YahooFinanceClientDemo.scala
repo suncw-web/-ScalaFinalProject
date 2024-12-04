@@ -1,4 +1,4 @@
-package api
+package apiClient
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
