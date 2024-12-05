@@ -18,9 +18,9 @@ case class FinnhubQuote(
                          l: Double, // Low price
                          o: Double, // Opening price
                          pc: Double // Previous close price
-                       ) // "c" is the current price
+                       )
 
-// To fetch historical prices using Finnhub, I use their Stock Candles API
+
 // Define the case class FinnhubClient to match the API response:
 case class FinnhubCandles(c: Seq[Double], h: Seq[Double], l: Seq[Double], o: Seq[Double], s: String, t: Seq[Long], v: Seq[Double])
 

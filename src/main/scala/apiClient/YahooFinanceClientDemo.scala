@@ -1,9 +1,10 @@
 package apiClient
 
+
 import akka.actor.ActorSystem
 import akka.stream.Materializer
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 object YahooFinanceClientDemo extends App {
@@ -27,9 +28,12 @@ object YahooFinanceClientDemo extends App {
     yahooFinanceClient.getRealTimePrice(symbol).onComplete {
       case Success(Some(price)) =>
         println(s"The current price of $symbol is $$ $price")
+        system.terminate()
       case Success(None) =>
         println(s"Could not fetch the price for $symbol.")
+        system.terminate()
       case Failure(exception) =>
         println(s"Failed to fetch price: $exception")
+        system.terminate()
     }
 }

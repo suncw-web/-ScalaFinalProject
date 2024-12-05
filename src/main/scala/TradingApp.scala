@@ -1,6 +1,5 @@
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import akka.http.scaladsl.Http
 
 import scala.concurrent.ExecutionContext
 
@@ -36,7 +35,7 @@ object TradingApp extends App{
  */
 
   val apiKey = "ct391jpr01qkff714tggct391jpr01qkff714th0" // Replace with my Finnhub API key
-  val finnhubClient = new FinnhubClient(apiKey)
+  private val finnhubClient = new FinnhubClient(apiKey)
 
 
 

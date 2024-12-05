@@ -1,14 +1,13 @@
 
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 import akka.actor.ActorSystem
 import akka.stream.Materializer
 
-import dsl.{Portfolio, Quantity, Stock, StockOption}
 
 
-object ApiDemo extends App {
+object AlphaVantageClientDemo extends App {
 
   // Create ActorSystem and Materializer (implicitly required by Akka HTTP)
   implicit val system: ActorSystem = ActorSystem("alpha-vantage-system")
@@ -20,7 +19,7 @@ object ApiDemo extends App {
   val apiKey = "6L4F5FO8C8QOMQRN" // Replace with your Alpha Vantage API key
 
   // Instantiate AlphaVantageClient with implicit parameters
-  val alphaVantageClient = new AlphaVantageClient(apiKey)
+  private val alphaVantageClient = new AlphaVantageClient(apiKey)
 
 
   // The stock symbol for which we want to fetch the real-time price
@@ -36,8 +35,8 @@ object ApiDemo extends App {
       system.terminate()  // Terminate ActorSystem in case of failure
   }
 
-  // Ensure the ActorSystem doesn't immediately shut down before the task completes
-  system.whenTerminated.onComplete {
-    case _ => println("ActorSystem terminated.")
-  }
+//  // Ensure the ActorSystem doesn't immediately shut down before the task completes
+//  system.whenTerminated.onComplete {
+//    case _ => println("ActorSystem terminated.")
+//  }
 }

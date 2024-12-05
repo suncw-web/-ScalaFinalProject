@@ -31,7 +31,7 @@ case class Stock(symbol: String) extends Asset
 
 /**
  * define stockOption, it's different with scala Option
- * @param symbol
+ * @param symbol sock symbol
  * @param optionType e.g., "CALL" or "PUT".
  *                   CALL Option means you are betting that the stock price will go up
  *                   PUT Option means you are betting that the stock price will go down
@@ -59,19 +59,25 @@ case object Market extends OrderType
 case class Limit(price: Double) extends OrderType
 case class Stop(price: Double) extends OrderType
 
-
+/**
+ * "GTC" stands for "Good-Til-Cancelled,"
+ * meaning an order will remain active until it is executed or explicitly cancelled by the trader
+ * "IOC" stands for "Immediate-Or-Cancel,"
+ * which means an order must be filled immediately,
+ * and any portion not executed is automatically cancelled right away;
+ */
 sealed trait TimeInForce
 case object GTC extends TimeInForce
 case object IOC extends TimeInForce
 
 /**
  * Create an Order
- * @param action
- * @param quantity
- * @param asset
- * @param orderType
- * @param timeInForce
- * @param status
+ * @param action buy or sell
+ * @param quantity how much asset do you want to buy or sell
+ * @param asset what asset do you want to buy or sell
+ * @param orderType Market, limit(price), and Stop(price)
+ * @param timeInForce GTC or IOC
+ * @param status Pending or finish
  */
 case class Order(
                   action: Action,

@@ -52,8 +52,8 @@ class Portfolio {
   def show(): Unit = {
     println("Portfolio Details:")
     orders.foreach {
-      case Order(action, Quantity(amount), asset, Some(orderType), _, _) =>
-        println(s"$action $amount of $asset as $orderType")
+      case Order(action, Quantity(amount), asset, Some(orderType), timeInForce, _) =>
+        println(s"$action $amount of $asset as $orderType with $timeInForce")
       case Order(action, Quantity(amount), asset, None, _, _) =>
         println(s"$action $amount of $asset with no specific order type")
     }

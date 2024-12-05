@@ -7,7 +7,7 @@ import akka.stream.Materializer
 import io.circe.generic.auto._
 import io.circe.parser._
 import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
+
 // Case classes for Alpha Vantage API response
 case class TimeSeriesData(open: String, high: String, low: String, close: String, volume: String)
 case class AlphaVantageError(Information: String)
@@ -22,7 +22,7 @@ class AlphaVantageClient(apiKey: String)(implicit system: ActorSystem, materiali
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = url))
     responseFuture.flatMap { response =>
       Unmarshal(response.entity).to[String].map { jsonString =>
-        println(s"Raw JSON response: $jsonString") // Debug: Print the raw JSON
+        // println(s"Raw JSON response: $jsonString") // Debug: Print the raw JSON
         // Try decoding as the expected response
         decode[AlphaVantageResponse](jsonString) match {
           case Right(parsedResponse) if parsedResponse.`Time Series (1min)`.isDefined =>

@@ -71,7 +71,7 @@ object Trade {
      * @return Order
      */
     def withAttributes(orderType: OrderType, timeInForce: TimeInForce = GTC): Order = {
-      Order(action, quantity, asset, Some(orderType))
+      Order(action, quantity, asset, Some(orderType),timeInForce)
     }
   }
 }

@@ -8,9 +8,11 @@ lazy val root = (project in file("."))
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.16" % Test, // Testing
+  "org.mockito" %% "mockito-scala" % "1.17.27" % Test,
 //
   "com.typesafe.akka" %% "akka-http" % "10.2.10",   // For HTTP server
-  "com.typesafe.akka" %% "akka-actor" % "2.6.20",    // For Akka actors
+  "com.typesafe.akka" %% "akka-actor" % "2.8.6",    // For Akka actors
+  "com.typesafe.akka" %% "akka-actor-typed" % "2.8.6",
   "com.typesafe.akka" %% "akka-stream" % "2.8.6",    // For Akka stream
 //
 //  // Circe for JSON parsing

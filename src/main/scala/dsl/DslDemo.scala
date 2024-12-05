@@ -6,9 +6,9 @@ import Trade._
 object DslDemo extends App {
 
   // Sample orders, no use portfolio to manage orders
-  val stockOrder = buy(100).of("AAPL").atLimit(150.0)
-  val optionOrder = sell(50).ofOption("GOOGL", Call, 2500.0, "2024-12-31").atMarket()
-  val marketOrder = sell(50).of("AAPL").atStop(280.0)
+  private val stockOrder = buy(100).of("AAPL").atLimit(150.0)
+  private val optionOrder = sell(50).ofOption("GOOGL", Call, 2500.0, "2024-12-31").atMarket()
+  private val marketOrder = sell(50).of("AAPL").atStop(280.0)
 
   println(stockOrder)  // Output: Order(BUY,100,Stock(AAPL),Limit(150.0))
   println(optionOrder) // Output: Order(Sell,Quantity(50),StockOption(GOOGL,Call,Some(2500.0),Some(2024-12-31)),Some(Market),GTC,Pending)
@@ -50,8 +50,12 @@ object DslDemo extends App {
   portfolio.addDslOrder(assetBuilder, Market)
 
   // addTo is a method of AssetBuilder
-  val assetBuilder1 = portfolio.buy(20).ofOption("MMM", Call, 132.0, "2024-12-31")
+  private val assetBuilder1 = portfolio.buy(20).ofOption("MMM", Call, 132.0, "2024-12-31")
   assetBuilder1.addTo(portfolio, Limit(145))
+
+  // withAttributes is another method of AssetBuilder
+  private val assetBuilder2 = assetBuilder1.withAttributes(Market, IOC)
+  portfolio.addOrder(assetBuilder2)
 
   // Show updated portfolio after adding option order
   portfolio.show()
