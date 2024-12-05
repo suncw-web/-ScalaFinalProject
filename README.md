@@ -50,7 +50,7 @@ To examine a number of different forecasting techniques to predict future stock 
 
 Alpha Vantage API, for free stock api service covering the majority of our datasets for up to 25 requests per day.
 
-Yahoo Finance Stocks dataset, due to licence issue can't use it.
+Yahoo Finance Stocks dataset, due to licence issue can't be used.
 
 The dataset was taken from Kaggle and had data for s&p500 companies.
 

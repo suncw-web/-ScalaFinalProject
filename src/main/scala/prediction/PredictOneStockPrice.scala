@@ -54,10 +54,9 @@ object PredictOneStockPrice {
     // Cast the Volume column from long to double
     val numericData = filledData.withColumn("Volume", col("Volume").cast("double"))
 
+    println("Enter the stock symbol you want to predict and evaluate (e.g., MMM, symbol in S&P 500):")
     // Select a stock symbol
-    val selectedSymbol = "MMM"
-    //val selectedSymbol = args(0) // Assuming symbol is passed as a command-line argument
-
+    val selectedSymbol = scala.io.StdIn.readLine().toUpperCase()
 
     // Filter data for the chosen symbol
     val symbolData = numericData.filter(col("Symbol") === selectedSymbol)

@@ -44,7 +44,7 @@ object PredictAllStockPrice {
     stockData.printSchema()
     stockData.show(10)
 
-    // data cleaning: Handle null values by replacing them with 0.0
+    // Data cleaning: Handle null values by replacing them with 0.0
     val filledData = stockData.na.fill(0.0)
 
     filledData.printSchema()
@@ -91,11 +91,7 @@ object PredictAllStockPrice {
       // Train the model on the training data
       val lrModel = lr.fit(trainingData)
 
-      //    // Print the coefficients and intercept of the trained model
-      //    println(s"Coefficients: ${lrModel.coefficients}")
-      //    println(s"Intercept: ${lrModel.intercept}")
-
-      // Print model coefficients and intercept
+      // Print the coefficients and intercept of the trained model
       println(s"Coefficients for $symbol: ${lrModel.coefficients}")
       println(s"Intercept for $symbol: ${lrModel.intercept}")
 

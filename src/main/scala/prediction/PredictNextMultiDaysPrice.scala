@@ -2,7 +2,7 @@ package prediction
 
 import org.apache.spark.ml.feature.VectorAssembler
 import org.apache.spark.ml.regression.LinearRegression
-import org.apache.spark.ml.evaluation.RegressionEvaluator
+
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.expressions.Window
 import org.apache.spark.sql.functions._
@@ -51,9 +51,13 @@ object PredictNextMultiDaysPrice extends App {
 
   numericData.printSchema()
 
+//  // Select a stock symbol
+//  val selectedSymbol = "MMM"
+//  //val selectedSymbol = args(0) // Assuming symbol is passed as a command-line argument
+
+  println("Enter the stock symbol you want to predict and evaluate (e.g., MMM, symbol in S&P 500):")
   // Select a stock symbol
-  val selectedSymbol = "MMM"
-  //val selectedSymbol = args(0) // Assuming symbol is passed as a command-line argument
+  val selectedSymbol = scala.io.StdIn.readLine().toUpperCase()
 
   // Filter data for the chosen symbol
   val symbolData = numericData.filter(col("Symbol") === selectedSymbol)
@@ -84,10 +88,10 @@ object PredictNextMultiDaysPrice extends App {
   val lrModel = lr.fit(assembledData)
 
 
-  val futurePredictions = scala.collection.mutable.ArrayBuffer[Double]()
+  private val futurePredictions = scala.collection.mutable.ArrayBuffer[Double]()
 
   // Placeholder to store predictions
-  var recentData = enrichedData.orderBy(desc("Date")).limit(1) // Start with the most recent row
+  private var recentData = enrichedData.orderBy(desc("Date")).limit(1) // Start with the most recent row
 
 
   // Loop to generate predictions for 'predictionDays'
