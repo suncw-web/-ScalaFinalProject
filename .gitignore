@@ -1,0 +1,10 @@
+# IntelliJ IDEA specific files
+.idea/
+
+# BSP (Build Server Protocol) directory
+.bsp/
+
+# SBT project and target directories
+project/
+target/
+
