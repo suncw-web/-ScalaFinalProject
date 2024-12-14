@@ -19,19 +19,19 @@ To examine a number of different forecasting techniques to predict future stock 
 
 # Methodology
 ## Data cleaning and parsing
-1.  Data from all the companies CSV was loaded into dataframes and converted to format required by ARIMA model.
+1.  Data from all the companies CSV was loaded into dataframes and converted to format required by Linear regression.
     dataURL: https://www.kaggle.com/datasets/andrewmvd/sp-500-stocks/data
 
 ## Spark Timeseries Methodology
 1. A time series is a series of data points indexed (or listed or graphed) in time order. Most commonly, a time series is a sequence taken at successive equally spaced points in time.
 
-2. Company name and dates were taken as features to train the data using ARIMA model.
+2. Company name and dates were taken as features to train the data using Linear regression.
 
 3. Dataframes of all the companies were joined and loaded to RDD.
 
-4. Using ARIMA model data is trained and model is then used for forecasting future values.
+4. Using Linear regression data is trained and model is then used for forecasting future values.
 
-5. Using forecast method of ARIMA model stock prices for 30 days.
+5. Using forecast method of Linear regression stock prices for 1 or 7 days.
 
 
 # Steps to run the project on the local machine
@@ -56,7 +56,7 @@ The dataset was taken from Kaggle and had data for s&p500 companies.
 
 Each data file had 8 columns (Date,Symbol,Adj Close,Close,High,Low,Open,Volume)
 
-We trained the model with the data of 10 companies and 15000 rows.
+We trained the model with the data of 5 companies and 18000 rows.
 
 # Details
 
@@ -70,4 +70,4 @@ assessed the accuracy with mae, RMSE, and R square.
 
 # Continuous Integration
 
-This project is using Travis CI as the continuous integration tool  
+This project is using GitHub Actions as the continuous integration tool
